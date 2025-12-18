@@ -1383,12 +1383,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   forwardSignal: 0
   backwardSignal: 0
-  type: 1
+  type: 0
   rod: {fileID: 379490356}
   minPos: 0.3
   maxPos: 1.67
   speed: 1
-  returnSpeed: 3
   isMoving: 0
   isFrontEnd: 0
 --- !u!1 &449561591
@@ -3588,12 +3587,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Cylinder
   forwardSignal: 0
   backwardSignal: 0
-  type: 1
+  type: 0
   rod: {fileID: 978697957}
   minPos: 0.4
   maxPos: 1.1
   speed: 2
-  returnSpeed: 3
   isMoving: 0
   isFrontEnd: 0
 --- !u!1 &928716376
@@ -5273,12 +5271,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Cylinder
   forwardSignal: 0
   backwardSignal: 0
-  type: 1
+  type: 0
   rod: {fileID: 1874946734}
   minPos: 0.3
   maxPos: 1.67
   speed: 2
-  returnSpeed: 3
   isMoving: 0
   isFrontEnd: 0
 --- !u!1 &1251484065
@@ -5747,12 +5744,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Cylinder
   forwardSignal: 0
   backwardSignal: 0
-  type: 1
+  type: 0
   rod: {fileID: 1694404544}
   minPos: 0.3
   maxPos: 1.67
   speed: 2
-  returnSpeed: 3
   isMoving: 0
   isFrontEnd: 0
 --- !u!1 &1396044261
