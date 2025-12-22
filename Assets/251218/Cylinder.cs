@@ -39,6 +39,9 @@ public class Cylinder : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        lsBackwardSignal = true;
+        lsBackwardMR.material.color = new Color(1, 0, 0, 0.7f);
+
         StartCoroutine(CoMoveForwardBySignal());
         StartCoroutine(CoMoveBackwardBySignal());
     }
@@ -186,22 +189,40 @@ public class Cylinder : MonoBehaviour
                 
                 if(distance < 0.1f)
                 {
+                    if(type == 솔레노이드타입.단방향솔레노이드)
+                    {
+                        // 실린더가 전진완료 시 작동
+                        if(forwardSignal && isMoving)
+                        {
+                            lsForwardSignal = isFrontEnd = true;
+                            lsForwardMR.material.color = new Color(1, 0, 0, 0.7f);
+                        }
+                        else if(isMoving)
+                        {
+                            lsBackwardSignal = true;
+                            lsBackwardMR.material.color = new Color(1, 0, 0, 0.7f);
+                        }
+                    }
+
+                    if(type == 솔레노이드타입.양방향솔레노이드)
+                    {
+                        // 실린더가 전진완료 시 작동
+                        if (forwardSignal && isMoving)
+                        {
+                            lsForwardSignal = isFrontEnd = true;
+                            lsForwardMR.material.color = new Color(1, 0, 0, 0.7f);
+                        }
+
+                        // 실린더가 후진완료 시 작동(양솔의 경우만 작동)
+                        if (backwardSignal && isMoving)
+                        {
+                            lsBackwardSignal = true;
+                            lsBackwardMR.material.color = new Color(1, 0, 0, 0.7f);
+                        }
+                    }
+
                     isMoving = false;
-
-                    // 실린더가 전진완료 시 작동
-                    if(forwardSignal)
-                    {
-                        lsForwardSignal = isFrontEnd = true;
-                        lsForwardMR.material.color = new Color(1, 0, 0, 0.7f);
-                    }
-
-                    // 실린더가 후진완료 시 작동
-                    if(backwardSignal)
-                    {
-                        lsBackwardSignal = true;
-                        lsBackwardMR.material.color = new Color(1, 0, 0, 0.7f);
-                    }
-
+                    
                     break;
                 }
                 else
