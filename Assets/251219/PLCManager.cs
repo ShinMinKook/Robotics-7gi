@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MPSSimulator;
+using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.ProBuilder.Shapes;
 using UnityEngine.UI;
@@ -22,6 +24,9 @@ public class PLCManager : MonoBehaviour
     [SerializeField] TowerLamp towerLamp;
     [SerializeField] Conveyor conveyor;
     [SerializeField] Loader loader;
+    [SerializeField] MPSSimulator.Sensor loaderSensor;
+    [SerializeField] MPSSimulator.Sensor metalSensor;
+    [SerializeField] MPSSimulator.Sensor proximitySensor;
 
     [Header("UI 버튼 세팅")]
     [SerializeField] Button 시작버튼;
@@ -52,14 +57,57 @@ public class PLCManager : MonoBehaviour
 
     private void Update()
     {
-        // cylinder1은 양솔
+        if (!MxComponent.instance.isConnected) return;
+
+        // cylinder1은 양솔                            //[블록번호][디바이스 번호]
         cylinder1.forwardSignal  = MxComponent.instance.plcData[0][0];
         cylinder1.backwardSignal = MxComponent.instance.plcData[0][1];
 
         // 나머지는 단동형
-        cylinder2.forwardSignal = MxComponent.instance.plcData[0][2];
-        cylinder3.forwardSignal = MxComponent.instance.plcData[0][3];
-        cylinder4.forwardSignal = MxComponent.instance.plcData[0][4];
+        cylinder2.forwardSignal  = MxComponent.instance.plcData[0][2];
+        cylinder3.forwardSignal  = MxComponent.instance.plcData[0][3];
+        cylinder4.forwardSignal  = MxComponent.instance.plcData[0][4];
+
+        // 타워램프
+        towerLamp.redLamSignal   = MxComponent.instance.plcData[0][5];
+        towerLamp.yellowLamSignal= MxComponent.instance.plcData[0][6];
+        towerLamp.greenLamSignal = MxComponent.instance.plcData[0][7];
+
+        // Loader
+        loader.loadSignal        = MxComponent.instance.plcData[0][8];
+
+        // 컨베이어
+        conveyor.cwSignal        = MxComponent.instance.plcData[0][9];
+        conveyor.ccwSignal       = MxComponent.instance.plcData[0][10];    // 0A
+
+        // 가상의 센서정보의 순서정의 실린더LS0 -> X00, 실린더1LS1 -> X01
+        //  X0 X1 X2 ....
+        // "10101010100" -> "00101010101" -> 341
+
+        int ls1 = cylinder1.lsBackwardSignal   ? 1 : 0; // 삼항 연산자
+        int ls2 = cylinder1.lsForwardSignal    ? 1 : 0;  
+        int ls3 = cylinder2.lsBackwardSignal   ? 1 : 0; 
+        int ls4 = cylinder2.lsForwardSignal    ? 1 : 0;  
+        int ls5 = cylinder3.lsBackwardSignal   ? 1 : 0; 
+        int ls6 = cylinder3.lsForwardSignal    ? 1 : 0;  
+        int ls7 = cylinder4.lsBackwardSignal   ? 1 : 0; 
+        int ls8 = cylinder4.lsForwardSignal    ? 1 : 0;
+        int s1  = loaderSensor.sensorSignal    ? 1 : 0;
+        int s2  = metalSensor.sensorSignal     ? 1 : 0;
+        int s3  = proximitySensor.sensorSignal ? 1 : 0;
+
+        string xDataStr = $"{ls1}{ls2}" +
+                          $"{ls3}{ls4}" +
+                          $"{ls5}{ls6}" +
+                          $"{ls7}{ls8}" +
+                          $"{s1}" +
+                          $"{s2}" +
+                          $"{s3}";
+
+        xDataStr = new string(xDataStr.Reverse().ToArray()); // "00101010101"
+        int xData = Convert.ToInt32(xDataStr, 2);            // 341
+
+        MxComponent.instance.plcXData[0] = xData;
     }
 
     private void OnDisconnectBtnClkEvent()

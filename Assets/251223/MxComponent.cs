@@ -19,6 +19,7 @@ public class MxComponent : MonoBehaviour
     public float interval = 1;
     //bool[,] data = new bool[3,16];
     public List<bool[]> plcData = new List<bool[]>(); // 공용 데이터 컨테이너
+    public int[] plcXData = new int[1];               // PLCManager에서 전달받은 정보
 
     private void Awake()
     {
@@ -62,7 +63,10 @@ public class MxComponent : MonoBehaviour
     {
         while(isConnected)
         {
+            // 디바이스의 시작주소와, 블록의 개수를 입력
             ReadDeviceBlock("Y0", 1);
+
+            WriteDeviceBlock("X0", 1, ref plcXData);
 
             yield return new WaitForSeconds(interval);
         }
@@ -99,6 +103,7 @@ public class MxComponent : MonoBehaviour
     /// { true, false, true, false ... 총 16개 }
     /// { true, false, true, false ... 총 16개 }
     /// { true, false, true, false ... 총 16개 }
+    /// "0000111111111111"
     /// </summary>
     /// <param name="data">PLC로 부터 받은 10진수 배열(블록) 데이터</param>
     /// <returns></returns>
@@ -116,14 +121,12 @@ public class MxComponent : MonoBehaviour
             //                                  1
             for(int j = 0;  j < block.Length; j++)
             {
-                bool isBitSet = ((data[i] & (1 << j)) == 1);
-                block[j] = true;
+                bool isBitSet = ((data[i] & (1 << j)) != 0);
+                block[j] = isBitSet;
             }
             // block = { t, t, t, t, t, t, t, t, t, t, t, f,f,f,f,f}
             // cylinder1.forwardSignal  = block[0];
             // cylinder1.backwardSignal = block[1];
-            // cylinder2.backwardSignal = block[2];
-            // cylinder3.backwardSignal = block[3];
 
             result.Add(block);
         }
@@ -131,6 +134,13 @@ public class MxComponent : MonoBehaviour
         return result;
     }
 
+    /// <summary>
+    /// MPS 설비의 INPUT(X0...) 신호를 PLC로 전달해 준다.
+    /// * 참고: PLC에 연동된 센서가 없기 때문에, PLC프로그램을 작동을 위한 가상 Sensor를 하드웨어 센서처럼 사용
+    /// </summary>
+    /// <param name="startDevice">쓰기 위한 블록의 시작 디바이스 주소</param>
+    /// <param name="blockNum">쓰기위한 블록의 개수</param>
+    /// <param name="data">MPS의 Sensor들의 정보를 넣어주기 위한 인자</param>
     public void WriteDeviceBlock(string startDevice, int blockNum, ref int[] data)
     {
         if(isConnected)

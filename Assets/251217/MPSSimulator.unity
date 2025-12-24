@@ -1882,7 +1882,6 @@ GameObject:
   - component: {fileID: 302013259}
   - component: {fileID: 302013258}
   - component: {fileID: 302013257}
-  - component: {fileID: 302013256}
   m_Layer: 5
   m_Name: "Connect \uBC84\uD2BC"
   m_TagString: Untagged
@@ -1910,51 +1909,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &302013256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 302013254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventTrigger
-  m_Delegates:
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 731203120}
-          m_TargetAssemblyTypeName: PLCManager, Assembly-CSharp
-          m_MethodName: OnSOL4BtnDownEvent
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 3
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 731203120}
-          m_TargetAssemblyTypeName: PLCManager, Assembly-CSharp
-          m_MethodName: OnSOL4BtnUpEvent
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!114 &302013257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2067,6 +2021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MxComponent
   isConnected: 0
+  interval: 1
 --- !u!4 &345326997
 Transform:
   m_ObjectHideFlags: 0
@@ -4986,6 +4941,8 @@ MonoBehaviour:
   "convCW\uBC84\uD2BC": {fileID: 1491175946}
   "convCCW\uBC84\uD2BC": {fileID: 992345320}
   "loader\uBC84\uD2BC": {fileID: 536265709}
+  "connect\uBC84\uD2BC": {fileID: 302013257}
+  "disConnect\uBC84\uD2BC": {fileID: 1638320814}
 --- !u!1 &738671240
 GameObject:
   m_ObjectHideFlags: 0
@@ -13038,7 +12995,6 @@ GameObject:
   - component: {fileID: 1638320816}
   - component: {fileID: 1638320815}
   - component: {fileID: 1638320814}
-  - component: {fileID: 1638320813}
   m_Layer: 5
   m_Name: "Disconnect \uBC84\uD2BC"
   m_TagString: Untagged
@@ -13066,51 +13022,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &1638320813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1638320811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventTrigger
-  m_Delegates:
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 731203120}
-          m_TargetAssemblyTypeName: PLCManager, Assembly-CSharp
-          m_MethodName: OnSOL4BtnDownEvent
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 3
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 731203120}
-          m_TargetAssemblyTypeName: PLCManager, Assembly-CSharp
-          m_MethodName: OnSOL4BtnUpEvent
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!114 &1638320814
 MonoBehaviour:
   m_ObjectHideFlags: 0
